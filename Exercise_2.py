@@ -49,7 +49,8 @@ minimals = []    # minimals[i][0] = x, minimals[i][1] = y, minimals[i][2] = z
 for x0 in x0s:
     # Method SLSQP uses Sequential Least SQuires Programming to minimize a function
     # of several variables with any combination of bounds, equality and inequality constraints.
-    res = min_func_jacobian(x0)
+    res = min_func(x0)
+    print(res)
     minimals.append((res.x[0], res.x[1], res.fun))
     print("optimal value p*", res.fun)
     print("optimal var: x1 = ", res.x[0], " x2 = ", res.x[1])

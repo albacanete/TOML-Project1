@@ -49,7 +49,7 @@ def min_func_jacobian(x):
 
 # Minimize objective function with hessian
 def min_func_hessian(x):
-    return minimize(obj_fun(), x0, bounds=bounds, constraints=cons, jac=jacobian, hess=hessian)
+    return minimize(obj_fun(), x, bounds=bounds, constraints=cons, jac=jacobian, hess=hessian)
 
 
 # constraints functions
