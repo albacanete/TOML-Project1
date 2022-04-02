@@ -7,7 +7,6 @@ x = Variable(1, name='x')
 
 # Constraints
 c1 = cvxpy.square(x) - 6. * x + 8.
-print(c1)
 constraints = [c1 <= 0.]
 
 # Form objective.
@@ -25,13 +24,16 @@ print("optimal dual variables lambda1 = ", constraints[0].dual_value)
 
 # Objective function for plot
 def plot_obj_fun(x):
-    return pow(x, 2) - 6 * x + 8
+    return pow(x, 2) + 1
 
 
 # define range for input
-x0 = np.linspace(-5.5, 100)
+x0 = np.linspace(-10, 10)
 plt.plot(x0, plot_obj_fun(x0))
 # create a surface plot with the jet color scheme
 plt.scatter(x.value, prob.value, color='red', edgecolor='black')
+label = "local minimum [2, 5]"
+plt.scatter(x.value, prob.value, color='red', edgecolor='black', label=label)
+plt.legend(prop={'size': 6}, loc='upper right')
 # show the plot
 plt.show()

@@ -39,17 +39,17 @@ def obj_fun():
 
 # Minimize objective function
 def min_func(x):
-    return minimize(obj_fun(), x, method='SLSQP', bounds=bounds, constraints=cons)
+    return minimize(obj_fun(), x, method='SLSQP', bounds=bounds, constraints=cons, options={'ftol': 1e-9,'disp':True})
 
 
 # Minimize objective function with gradient
 def min_func_jacobian(x):
-    return minimize(obj_fun(), x, method='SLSQP', bounds=bounds, constraints=cons, jac=jacobian)
+    return minimize(obj_fun(), x, method='SLSQP', bounds=bounds, constraints=cons, jac=jacobian, options={'ftol': 1e-9,'disp':True})
 
 
 # Minimize objective function with hessian
 def min_func_hessian(x):
-    return minimize(obj_fun(), x, bounds=bounds, constraints=cons, jac=jacobian, hess=hessian)
+    return minimize(obj_fun(), x, bounds=bounds, constraints=cons, jac=jacobian, hess=hessian, options={'ftol': 1e-9,'disp':True})
 
 
 # constraints functions
@@ -65,20 +65,15 @@ x0 = np.asarray((10, 10))
 # Method SLSQP uses Sequential Least SQuares Programming to minimize a function 
 # of several variables with any combination of bounds, equality and inequality constraints. 
 res = min_func(x0)
-print("optimal value p*", res.fun)
-print("optimal var: x1 = ", res.x[0], " x2 = ", res.x[1])
+print(res)
 
 res2 = min_func_jacobian(x0)
 print('\n', res2)
-print("JAC: optimal value p*", res2.fun)
-print("JAC: optimal var: x1 = ", res2.x[0], " x2 = ", res2.x[1])
 
 # print 'C1',res2.x[0]**2+res2.x[1]**2+res2.x[0]*res2.x[1],'C2',3*res2.x[0]+2*res2.x[1]
 
 res3 = min_func_hessian(x0)
 print('\n', res3)
-print("JAC+HESS: optimal value p*", res3.fun)
-print("JAC*HESS: optimal var: x1 = ", res3.x[0], " x2 = ", res3.x[1])
 
 
 print('\n SOLVING USING CVXPY\n')

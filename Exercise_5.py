@@ -21,6 +21,8 @@ print("is DCP?:", prob.is_dcp())
 print("status:", prob.status)
 print("optimal value p* = ", prob.value)
 print("optimal var: x1 = ", x[0].value, x[1].value)
+print("optimal dual variables lambda1 = ", constraints[0].dual_value)
+print("optimal dual variables lambda2 = ", constraints[0].dual_value)
 
 
 # Objective function for plot
@@ -40,7 +42,9 @@ results = np.array(plot_obj_fun(x0, x1))
 # create a surface plot with the jet color scheme
 figure = plt.figure()
 axis = figure.gca(projection='3d')
-axis.scatter(x[0].value, x[1].value, prob.value, color='red', edgecolor='black')
+label = "global minimum [" + str(x[0].value) + ", " + str(x[1].value) + ", " + str(prob.value) + "]"
+axis.scatter(x[0].value, x[1].value, prob.value, color='red', edgecolor='black', label=label)
+plt.legend(prop={'size': 6})
 axis.plot_surface(x0, x1, results, cmap='jet')
 # show the plot
 plt.show()

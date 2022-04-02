@@ -22,12 +22,12 @@ def plot_obj_fun(x):
 
 # Minimize objective function
 def min_func(x):
-    return minimize(obj_fun(), x, method='SLSQP', bounds=bounds, constraints=cons)
+    return minimize(obj_fun(), x, method='SLSQP', bounds=bounds, constraints=cons, options={'ftol': 1e-9,'disp':True})
 
 
 # Minimize objective function with gradient
 def min_func_jacobian(x):
-    return minimize(obj_fun(), x, method='SLSQP', bounds=bounds, constraints=cons, jac=jacobian)
+    return minimize(obj_fun(), x, method='SLSQP', bounds=bounds, constraints=cons, jac=jacobian, options={'ftol': 1e-9,'disp':True})
 
 
 # Constraint functions (inequalities have to be >= 0)
@@ -42,7 +42,7 @@ cons = ({'type': 'ineq', 'fun': lambda x: -0.5 + x[0]},
 bounds = ((None, None),) * 2
 
 # Initial guess
-x0s = [np.asarray((3, 0)), np.asarray((1, 1))]
+x0s = [np.asarray((-3, -5)), np.asarray((1, 1)), np.asarray((10, -10))]
 
 # Save minimal points and variables to plot
 minimals = []    # minimals[i][0] = x, minimals[i][1] = y, minimals[i][2] = z
@@ -52,8 +52,7 @@ for x0 in x0s:
     res = min_func(x0)
     print(res)
     minimals.append((res.x[0], res.x[1], res.fun))
-    print("optimal value p*", res.fun)
-    print("optimal var: x1 = ", res.x[0], " x2 = ", res.x[1])
+
 
 # define range for input
 r_min, r_max = -5.0, 5.0
@@ -67,8 +66,9 @@ results = np.array(plot_obj_fun((x0, x1)))
 # create a surface plot with the jet color scheme
 figure = plt.figure()
 axis = figure.gca(projection='3d')
-for p in minimals:
-    axis.scatter(p[0], p[1], p[2], color='red', edgecolor='black')
+label_1 = "global minimum [" + str(minimals[1][0]) + ", " + str(minimals[1][1]) + ", " + str(minimals[1][2]) + "]"
+axis.scatter(minimals[1][0], minimals[1][1], minimals[1][2], color='red', edgecolor='black', label=label_1)
+plt.legend(prop={'size': 6})
 axis.plot_surface(x0, x1, results, cmap='jet')
 # show the plot
 plt.show()
