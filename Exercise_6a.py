@@ -1,10 +1,16 @@
 from scipy.optimize import newton
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 # Objective function formalization
 def obj_fun():
     return lambda x: 2 * (x ** 2) - 0.5
+
+
+# Plot objective function
+def plot_obj_fun(x):
+    return 2 * (x ** 2) - 0.5
 
 
 # First Derivative
@@ -21,6 +27,8 @@ def sec_der_obj_fun(x):
 print("SOLVING WITH GRADIENT DESCENT METHOD")
 # Initial guess
 x0 = 3
+label_x0 = "initial point [" + str(x0) + ", " + str(plot_obj_fun(x0)) + "]"
+plt.scatter(x0, plot_obj_fun(x0), color='yellow', edgecolor='black', label=label_x0)
 # stop criterion
 accuracy = pow(10, -4)
 # maximum number of iterations
@@ -38,10 +46,22 @@ while previous_step_size > accuracy and iters < max_iters:
     current = current - rate * der_obj_fun(previous)
     # Distance moved
     previous_step_size = abs(current - previous)
-    iters += 1  # iteration count
+    # iteration count
+    iters += 1
+    # plot
+    plt.scatter(current, plot_obj_fun(current), color='red', edgecolor='black')
 print("Initial point: ", x0)
 print("Local minimum: ", current)
 print("Number of iterations: ", iters)
+# Plot
+# define range for input
+x0 = np.linspace(-5, 5)
+plt.plot(x0, plot_obj_fun(x0))
+# plot minimal point
+label_min = "minimal point [" + str(current) + ", " + str(plot_obj_fun(current)) + "]"
+plt.scatter(current, plot_obj_fun(current), color='green', edgecolor='black', label=label_min)
+plt.legend(prop={'size': 6}, loc='upper right')
+plt.show()
 
 
 # NEWTON'S METHOD

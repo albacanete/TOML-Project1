@@ -1,10 +1,16 @@
 from scipy.optimize import newton
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 # Objective function formalization
 def obj_fun():
     return lambda x: 2 * (x ** 4) - 4 * (x ** 2) + x - 0.5
+
+
+# Plot objective function
+def plot_obj_fun(x):
+    return 2 * x ** 4 - 4 * (x ** 2) + x - 0.5
 
 
 # First derivative
@@ -24,6 +30,8 @@ x0s = [-2, -0.5, 0.5, 2]
 # stop criterion
 accuracy = pow(10, -4)
 for x0 in x0s:
+    label_x0 = "initial point [" + str(x0) + ", " + str(plot_obj_fun(x0)) + "]"
+    plt.scatter(x0, plot_obj_fun(x0), color='yellow', edgecolor='black', label=label_x0)
     # maximum number of iterations
     max_iters = 1000
     # iteration count
@@ -39,10 +47,22 @@ for x0 in x0s:
         current = current - rate * der_obj_fun(previous)
         # Distance moved
         previous_step_size = abs(current - previous)
-        iters += 1  # iteration count
+        # iteration count
+        iters += 1
+        # plot
+        plt.scatter(current, plot_obj_fun(current), color='red', edgecolor='black')
     print("Initial point: ", x0)
     print("Local minimum: ", current)
     print("Number of iterations: ", iters)
+    # Plot
+    # define range for input
+    x0 = np.linspace(-2, 2)
+    plt.plot(x0, plot_obj_fun(x0))
+    # plot minimal point
+    label_min = "minimal point [" + str(current) + ", " + str(plot_obj_fun(current)) + "]"
+    plt.scatter(current, plot_obj_fun(current), color='green', edgecolor='black', label=label_min)
+    plt.legend(prop={'size': 6}, loc='best')
+    plt.show()
 
 
 # NEWTON'S METHOD
