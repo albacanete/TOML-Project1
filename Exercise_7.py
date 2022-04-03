@@ -1,5 +1,5 @@
 import cvxpy
-from cvxpy import Variable, log, Minimize, Problem, log
+from cvxpy import Variable, Maximize, Problem
 
 
 # Create optimization variables
@@ -13,8 +13,8 @@ f3 = x[2]
 constraints = [f1 <= 1, f2 <= 2, f3 <= 1, x[0] >= 0, x[1] >= 0, x[2] >= 0]
 
 # Form objective.
-f0 = -cvxpy.log(x[0]) - cvxpy.log(x[1]) - cvxpy.log(x[2])
-obj = Minimize(f0)
+f0 = cvxpy.log(x[0]) + cvxpy.log(x[1]) + cvxpy.log(x[2])
+obj = Maximize(f0)
 
 # Form and solve problem.
 prob = Problem(obj, constraints)

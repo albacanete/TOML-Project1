@@ -16,6 +16,7 @@ obj = Minimize(f0)
 # Form and solve problem.
 prob = Problem(obj, constraints)
 print("solve", prob.solve())  # Returns the optimal value.
+print("is DCP?:", prob.is_dcp())
 print("status:", prob.status)
 print("optimal value p* = ", prob.value)
 print("optimal var: x1 = ", x.value)
